@@ -41,7 +41,10 @@ object AndroidBuild extends Build {
     settings = General.settings ++
                AndroidTest.androidSettings ++
                General.proguardSettings ++ Seq (
-      name := "ApplicationTestByScalaTests"
+      name := "ApplicationTestByScalaTests",
+      proguardInJars in Android <<= (proguardInJars in Android, scalaInstance) map { (jars, scalaInstance) =>
+        jars.filterNot(_ == scalaInstance.libraryJar)
+      }
     )
   ) dependsOn main
 }
