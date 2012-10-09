@@ -44,7 +44,11 @@ object AndroidBuild extends Build {
       name := "ApplicationTestByScalaTests",
       proguardInJars in Android <<= (proguardInJars in Android, scalaInstance) map { (jars, scalaInstance) =>
         jars.filterNot(_ == scalaInstance.libraryJar)
-      }
+      },
+      proguardOption in Android in main += """
+      | -keep class scala.ScalaObject
+      | -keep class scala.reflect.ScalaSignature { <methods>; }
+      """.stripMargin
     )
   ) dependsOn main
 }
