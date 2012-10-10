@@ -17,5 +17,6 @@ class ActivityTests extends ActivityInstrumentationTestCase2(classOf[MainActivit
       val textview = activity.findView(TR.textview)
       val a = Some(1)
       assertEquals(textview.getText, "hello, world!")
+      assertEquals(1, a.getOrElse(0))
     }
 }
